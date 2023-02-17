@@ -1,6 +1,7 @@
 "use client";
+import { sendEmailVerification } from "@/service/api/auth";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Box, Button, Card, CardContent, Stack, Typography } from "@mui/material";
+import { Alert, AlertTitle, Box, Button, Card, CardContent, Stack, Typography } from "@mui/material";
 
 export default function UserPage() {
   const { user, logout } = useAuth0();
@@ -10,6 +11,9 @@ export default function UserPage() {
     logout();
   }
 
+  function sendEmail() {
+    sendEmailVerification().catch((e) => {});
+  }
   return (
     <Card
       elevation={0}
@@ -19,6 +23,15 @@ export default function UserPage() {
         width: "100%",
       }}
     >
+      {!user?.email_verified ? (
+        <CardContent>
+          <Alert severity="info" action={<Button onClick={sendEmail}> Resend </Button>}>
+            <Typography fontSize={"0.8em"}>
+              You email is not yet verified, please check your email and click on the link to verify your account{" "}
+            </Typography>
+          </Alert>
+        </CardContent>
+      ) : null}
       <CardContent>
         <Stack alignItems={"center"} gap="0.5em">
           <Typography variant="h5" fontSize={"0.8em"}>
@@ -32,11 +45,18 @@ export default function UserPage() {
             architecture.
           </Typography>
           <Typography fontSize={"0.8em"}>Thank you for trying it out</Typography>
-          <Box>
+          <Stack direction="row" justifyContent="center" gap="0.8em">
+            <Button
+              LinkComponent={"a"}
+              target="_blank"
+              href="https://application-form.sh/WJ7YU54FM2SMAA4RTT7IZ47O7LX5I4F3TG3WI2VGZTZK6YTPUDTIVWDADICED725LODIJ3PREQ4GXZBV3CTBR5OCT3ARFQH5YRPXSIUHY5HWMUL37SZDNL56CLUVFBZVOZV3DPUF3HKCJD7QREZXM43FSTPC2FG7NEW7S"
+            >
+              Vist Application Form
+            </Button>
             <Button onClick={() => userLogout()} variant="contained">
               Logout
             </Button>
-          </Box>
+          </Stack>
         </Stack>
       </CardContent>
     </Card>
