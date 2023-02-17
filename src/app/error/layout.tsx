@@ -10,7 +10,7 @@ interface ILayoutProps {
 export default function UserLayout({ children }: ILayoutProps) {
   return (
     <Container maxWidth={false} disableGutters>
-      <Stack minHeight={"100vh"} justifyContent="center" alignContent={"center"}>
+      <Stack minHeight={"100vh"} justifyContent="center" alignItems={"center"}>
         <main>{children}</main>
       </Stack>
     </Container>

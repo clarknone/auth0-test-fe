@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { FormEvent, useState } from "react";
 
 export default function OnboardPage() {
-  const { user } = useAuth0();
+  const { user, } = useAuth0();
   const router = useRouter();
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -25,6 +25,7 @@ export default function OnboardPage() {
 
     updateUserProfile(data)
       .then(() => {
+
         router.replace("/user");
       })
       .catch((e) => {
@@ -49,7 +50,7 @@ export default function OnboardPage() {
         </Typography>
         <Typography fontSize={"0.8em"}>Kindly complete your profile to proceed</Typography>
         <form onSubmit={updateProfile}>
-          <Stack gap="0.5em">
+          <Stack mt={"2em"} gap="0.5em">
             <TextField defaultValue={user?.given_name} name="fullname" />
             <TextField defaultValue={user?.phone_number} name="phone" />
             <Typography>{error}</Typography>

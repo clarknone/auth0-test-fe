@@ -17,7 +17,7 @@ export default function UserLayout({ children }: ILayoutProps) {
   const [loading, setLoading] = useState(true);
 
   const { isAuthenticated, isLoading, getAccessTokenSilently } = useAuth0();
-  
+
   useEffect(() => {
     if (!isLoading) {
       if (isAuthenticated) {
@@ -33,7 +33,12 @@ export default function UserLayout({ children }: ILayoutProps) {
                 }
               })
               .catch((e) => {
-                router.replace("/onboard");
+                console.log({m:e.message})
+                if (e.message.includes("not found")) {
+                  router.replace("/onboard");
+                } else {
+                  router.replace("/error");
+                }
               });
           })
           .catch((e) => {
